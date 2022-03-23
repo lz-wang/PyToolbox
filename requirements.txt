@@ -2,3 +2,4 @@ loguru
 chardet
 pyside6
 pysmb
+paramiko
