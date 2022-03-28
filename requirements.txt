@@ -3,3 +3,4 @@ chardet
 pyside6
 pysmb
 paramiko
+requests
