@@ -4,3 +4,4 @@ pyside6
 pysmb
 paramiko
 requests
+py7zr
