@@ -22,13 +22,14 @@ def compress_7zip(src: str, dst_dir: str = None,
     try:
         dst_dir = src if not dst_dir else dst_dir
         src_path = Path(src)
-        dst_path = Path(dst_dir)
         if not target_file:
-            target_file = os.path.join(dst_path.parent, f'{src_path.name}.7z')
+            target_file = os.path.join(src_path.parent, f'{src_path.name}.7z')
         if not target_file.endswith('7z'):
             target_file = f'{target_file}.7z'
         with py7zr.SevenZipFile(file=target_file, mode='w', password=password) as archive:
-            archive.writeall(path=dst_dir, arcname=src_path.name)
+            archive.writeall(path=src, arcname=src_path.name)
+        shutil.copy(target_file, dst_dir)
+        os.remove(target_file)
         log.success(f'Compress "{src}" OK, compressed file: "{target_file}"!')
         return True
     except Exception as e:
