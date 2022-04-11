@@ -3,12 +3,13 @@ import os.path
 import pathlib
 from functools import partial
 from pathlib import Path
+from typing import List
 
 import chardet
 from loguru import logger as log
 
 
-def get_file_md5sum(file_path: str):
+def get_file_md5sum(file_path: str) -> str:
     """获取文件的md5哈希值"""
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f'cannot found file: {file_path}')
@@ -19,7 +20,7 @@ def get_file_md5sum(file_path: str):
         return md5hash.hexdigest()
 
 
-def touch_empty_file(file_name: str = '.tmp', file_dir: str = ''):
+def touch_empty_file(file_name: str = '.tmp', file_dir: str = '') -> str:
     """在指定目录创建空文件"""
     if not os.path.exists(file_dir):
         file_dir = os.environ['HOME']
@@ -28,7 +29,7 @@ def touch_empty_file(file_name: str = '.tmp', file_dir: str = ''):
     return file_path
 
 
-def is_image_file(file: str, ignore_hidden_file: bool = True):
+def is_image_file(file: str, ignore_hidden_file: bool = True) -> bool:
     """根据文件名后缀判断是否是图片文件"""
     try:
         file_name = file.split('/')[-1]
@@ -45,7 +46,7 @@ def is_image_file(file: str, ignore_hidden_file: bool = True):
         return False
 
 
-def get_encoding(file: str):
+def get_encoding(file: str) -> str:
     """获取文件的正确编码格式"""
     detector = chardet.UniversalDetector()
     detector.reset()
@@ -60,8 +61,8 @@ def get_encoding(file: str):
 
 
 def find_files(target_path: str,
-               ignore_hidden_file=True,
-               ignore_hidden_dir=True) -> list:
+               ignore_hidden_file: bool = False,
+               ignore_hidden_dir: bool = True) -> List[str]:
     """获取指定目录及其子目录下的所有文件列表
 
     Args:
@@ -92,3 +93,41 @@ def find_files(target_path: str,
 
     if os.path.isfile(target_path):
         return [target_path]
+
+
+def list_dirs(target_path: str) -> List[str]:
+    """列出定目录下所有文件夹（非递归）
+
+    Args:
+        target_path: 目标文件夹
+
+    Returns:
+        指定目录下的所有文件夹（全路径）
+    """
+    if not os.path.exists(target_path):
+        return []
+    if not os.path.isdir(target_path):
+        return []
+    all_paths = [os.path.join(target_path, p) for p in os.listdir(target_path)]
+    return [d for d in all_paths if os.path.isdir(d)]
+
+
+def list_files(target_path: str, ignore_hidden_file: bool = False) -> List[str]:
+    """列出定目录下所有文件（非递归）
+
+    Args:
+        target_path: 目标文件夹
+        ignore_hidden_file: 是否忽略隐藏文件
+
+    Returns:
+        指定目录下的所有文件（全路径）
+    """
+    if not os.path.exists(target_path):
+        return []
+    if not os.path.isdir(target_path):
+        return []
+    all_paths = [os.path.join(target_path, p) for p in os.listdir(target_path)]
+    if ignore_hidden_file:
+        return [d for d in all_paths if os.path.isfile(d) and not d.startswith('.')]
+    else:
+        return [d for d in all_paths if os.path.isfile(d)]
