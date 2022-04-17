@@ -37,7 +37,7 @@ def is_image_file(file: str, ignore_hidden_file: bool = True) -> bool:
             return False
         file_suffix = file.split('.')[-1]
         image_types = ['png', 'jpg', 'gif', 'bmp', 'tif', 'svg', 'webp']
-        if file_suffix in image_types:
+        if file_suffix.lower() in image_types:
             return True
         else:
             return False
