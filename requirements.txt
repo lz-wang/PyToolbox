@@ -6,6 +6,7 @@ paramiko
 requests
 py7zr
 pycryptodome
+pillow
 
 pytest
 coverage

@@ -6,6 +6,7 @@ This is a personal Python library for lzwang' daily usage.
 
 - Logger: [loguru](src/logger.py), [pylogger](src/pylogger.py)
 - File tools: [file tools](src/file.py)
+- Image tools: [image tools](src/image_tools.py)
 - Achieve tools: [7zip tools](src/7zip.py)
 - Regular tools: [RE tools](src/regular.py)
 - SSH client: [SSH client](src/ssh.py)
