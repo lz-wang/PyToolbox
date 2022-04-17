@@ -4,12 +4,14 @@ This is a personal Python library for lzwang' daily usage.
 
 ## Tools List
 
-- logger: [loguru](src/logger.py), [pylogger](src/pylogger.py)
-- file tools: [file tools](src/file.py), [7zip tools](src/7zip.py)
-- regular tools: [RE tools](src/regular.py)
+- Logger: [loguru](src/logger.py), [pylogger](src/pylogger.py)
+- File tools: [file tools](src/file.py)
+- Achieve tools: [7zip tools](src/7zip.py)
+- Regular tools: [RE tools](src/regular.py)
 - SSH client: [SSH client](src/ssh.py)
 - Samba client: [Samba client](src/samba.py)
 - PySide6 tools: [PySide6 tools](src/qt6.py)
+- AES tools: [AES tools](src/aes.py)
 
 ## Run Tests
 
@@ -31,7 +33,7 @@ coverage run -m pytest ./tests
 coverage report
 ```
 
-### show coverage report in webpage
+### show coverage report in web page
 
 ```shell
 coverage html
