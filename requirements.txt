@@ -5,3 +5,7 @@ pysmb
 paramiko
 requests
 py7zr
+pycryptodome
+
+pytest
+coverage
