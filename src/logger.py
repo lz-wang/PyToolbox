@@ -21,7 +21,7 @@ def add_log_to_file(log_dir: str):
         sink=os.path.join(log_dir, 'log_{time:YYYY_MM}.log'),
         level='DEBUG',
         format="{time:YYYY-MM-DD HH:mm:ss.SSS} "
-               "| {level: <8} | {name: <20} -> {function: <16} -> line.{line} | {message}",
+               "| {level: <8} | {name:} -> {function:} -> line.{line} | {message}",
         rotation='5 MB',  # create a new log file when log file size > 5 MB
         retention='3 months',  # keep log file time: "1 week, 3 days"、"2 months"
         backtrace=True,
