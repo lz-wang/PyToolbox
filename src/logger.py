@@ -44,9 +44,10 @@ def show_log_msgs():
 
 def init_logger(log_dir: str = None,
                 console_log_level: str = "INFO",
-                file_log_level: str = "DEBUG"):
+                file_log_level: str = "DEBUG",
+                show_demo_logger: bool = False):
     """loguru全局初始化，不需要再次导入"""
-    # 移除掉自带的sink
+    # first remove default logger sink
     logger.remove()
 
     # to console
@@ -57,4 +58,5 @@ def init_logger(log_dir: str = None,
         add_log_to_file(log_dir, file_log_level)
 
     # simple test log output
-    show_log_msgs()
+    if show_demo_logger:
+        show_log_msgs()
