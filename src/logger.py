@@ -18,7 +18,7 @@ def add_log_to_console(log_level: str = 'INFO'):
 
 def add_log_to_file(log_dir: str, log_level: str = 'DEBUG'):
     logger.add(
-        sink=os.path.join(log_dir, 'log_{time:YYYY_MM}.log'),
+        sink=os.path.join(log_dir, 'log_{time:YYYY_MM_DD-HH_mm_ss}.log'),
         level=log_level,
         format="{time:YYYY-MM-DD HH:mm:ss.SSS} "
                "| {level: <8} | {name:}:{function:}:line.{line} | {message}",
