@@ -9,8 +9,8 @@ import chardet
 from loguru import logger as log
 
 
-def get_file_md5sum(file_path: str) -> str:
-    """获取文件的md5哈希值"""
+def get_file_md5(file_path: str) -> str:
+    """获取文件的 md5 哈希值"""
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f'cannot found file: {file_path}')
     with open(file_path, 'rb') as f:
@@ -18,6 +18,17 @@ def get_file_md5sum(file_path: str) -> str:
         for buffer in iter(partial(f.read, 128), b''):
             md5hash.update(buffer)
         return md5hash.hexdigest()
+
+
+def get_file_sha256(file_path: str) -> str:
+    """获取文件的 sha256 哈希值"""
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f'cannot found file: {file_path}')
+    with open(file_path, "rb") as f:
+        sha256_hash = hashlib.sha256()
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+        return sha256_hash.hexdigest()
 
 
 def touch_empty_file(file_name: str = '.tmp', file_dir: str = '') -> str:
