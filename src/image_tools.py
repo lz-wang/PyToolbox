@@ -1,15 +1,15 @@
-"""
-References: https://www.tutorialspoint.com/python_pillow/python_pillow_creating_a_watermark.htm
-"""
 import os
 from pathlib import Path
+from traceback import format_exc
 
+import requests
 from PIL import Image, ImageDraw, ImageFont
 from loguru import logger as log
 
 
 def add_watermark(img_path: str, watermark: str, output_path: str = None):
     """为图片加上简单的水印
+    References: https://www.tutorialspoint.com/python_pillow/python_pillow_creating_a_watermark.htm
 
     Args:
         img_path: 需要加水印的图像路径
@@ -63,4 +63,31 @@ def add_watermark(img_path: str, watermark: str, output_path: str = None):
         return False
     except Exception as e:
         log.error(f'Add watermark in {img_path} error, detail: {e}')
+        return False
+
+
+def download_image(image_url: str, local_path: str) -> bool:
+    """从网络上下载图片并保存到本地指定位置
+
+    Args:
+        image_url: 远程图片url
+        local_path: 保存到本地的图片位置
+
+    Returns:
+        是否下载保存成功(bool)
+    """
+    try:
+        with open(local_path, 'wb') as handle:
+            response = requests.get(image_url, stream=True)
+            if not response.ok:
+                log.error(f'Download image from {image_url} failed, bad response:{response.json()}')
+                return False
+            for block in response.iter_content(1024):
+                if not block:
+                    break
+                handle.write(block)
+        log.success(f'Download image from {image_url} OK, save to {local_path}')
+        return True
+    except Exception as e:
+        log.error(f'Download image from {image_url} failed, detail: {e}, {format_exc}')
         return False
