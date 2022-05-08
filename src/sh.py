@@ -10,7 +10,7 @@ def run_cmd(cmd: list):
     out = stdout.decode("utf-8").strip()
     err = stderr.decode("utf-8").strip()
     if err:
-        log.error(f'[run shell cmd] Failed, detail: \n{err}')
+        log.warning(f'[run shell cmd] STD_ERR: \n{err}')
     if out:
-        log.success(f'[run shell cmd] OK, output: \n{out}')
+        log.success(f'[run shell cmd] STD_OUT, output: \n{out}')
     return out, err
