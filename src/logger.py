@@ -16,9 +16,9 @@ def add_log_to_console(log_level: str = 'INFO'):
     )
 
 
-def add_log_to_file(log_dir: str, log_level: str = 'DEBUG'):
+def add_log_to_file(log_dir: str, log_filename: str, log_level: str = 'DEBUG'):
     logger.add(
-        sink=os.path.join(log_dir, 'log_{time:YYYY_MM_DD}.log'),
+        sink=os.path.join(log_dir, log_filename + '_{time:YYYY_MM_DD}.log'),
         level=log_level,
         format="{time:YYYY-MM-DD HH:mm:ss.SSS} "
                "| {level: <8} | {name:}:{function:}:line.{line} | {message}",
@@ -43,6 +43,7 @@ def show_log_msgs():
 
 
 def init_logger(log_dir: str = None,
+                log_filename: str = 'log',
                 console_log_level: str = "INFO",
                 file_log_level: str = "DEBUG",
                 show_demo_logger: bool = False):
@@ -55,7 +56,7 @@ def init_logger(log_dir: str = None,
 
     # to file
     if log_dir is not None:
-        add_log_to_file(log_dir, file_log_level)
+        add_log_to_file(log_dir, log_filename, file_log_level)
 
     # simple test log output
     if show_demo_logger:
