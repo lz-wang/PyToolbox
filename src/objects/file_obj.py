@@ -1,7 +1,7 @@
-import os
-import hashlib
-import pathlib
 import datetime
+import hashlib
+import os
+import pathlib
 
 import chardet
 
