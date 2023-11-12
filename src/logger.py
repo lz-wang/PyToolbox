@@ -6,7 +6,7 @@ from loguru import logger
 _LOG_FORMAT = (
     '<green>{time:MM-DD HH:mm:ss.SSS}</green> '
     '| <level>{level: <7}</level> '
-    '| <cyan>{file: <20}</cyan><red>:</red> {line: <4}</cyan> '
+    '| <cyan>{file: <15}<red>:</red> {line: <3}</cyan> '
     '| <magenta><bold>{extra[prefix]}</bold></magenta><level>{message}</level>'
 )
 
@@ -20,7 +20,7 @@ def add_log_to_console(log_level: str = 'INFO'):
 
 
 def add_log_to_file(log_dir: str, log_filename: str, log_level: str = 'DEBUG'):
-    log_filepath = os.path.join(log_dir, log_filename + '_{time:YYYY_MM_DD}.log')
+    log_filepath = os.path.join(log_dir, log_filename + '_{time:YYYYMMDD-HHmmss}.log')
     logger.add(
         sink=log_filepath,
         level=log_level,
