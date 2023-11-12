@@ -3,30 +3,31 @@ import sys
 
 from loguru import logger
 
+_LOG_FORMAT = (
+    '<green>{time:MM-DD HH:mm:ss.SSS}</green> '
+    '| <level>{level: <7}</level> '
+    '| <cyan>{file: <20}</cyan><red>:</red> {line: <4}</cyan> '
+    '| <magenta><bold>{extra[prefix]}</bold></magenta><level>{message}</level>'
+)
+
 
 def add_log_to_console(log_level: str = 'INFO'):
     logger.add(
-        sink=sys.stderr,
+        sink=sys.stdout,
         level=log_level,
-        format='<green>{time:MM-DD HH:mm:ss.SSS}</green> '
-               '| <level>{level: <8}</level> '
-               '| <cyan>{name:}</cyan>: <cyan>{function:} '
-               '</cyan>: <cyan>line.{line:}</cyan> | '
-               '<level>{message}</level> '
+        format=_LOG_FORMAT
     )
 
 
 def add_log_to_file(log_dir: str, log_filename: str, log_level: str = 'DEBUG'):
+    log_filepath = os.path.join(log_dir, log_filename + '_{time:YYYY_MM_DD}.log')
     logger.add(
-        sink=os.path.join(log_dir, log_filename + '_{time:YYYY_MM_DD}.log'),
+        sink=log_filepath,
         level=log_level,
-        format="{time:YYYY-MM-DD HH:mm:ss.SSS} "
-               "| {level: <8} | {name:}:{function:}:line.{line} | {message}",
-        rotation='10 MB',  # create a new log file when log file size > 5 MB
-        retention='1 months',  # keep log file time: "1 week, 3 days"、"2 months"
-        # backtrace=True,
+        format=_LOG_FORMAT,
+        rotation='50 MB',  # create a new log file when log file size > 5 MB
+        retention='6 months',  # keep log file time: "1 week, 3 days"、"2 months"
         encoding="utf-8",
-        # compression='zip'  # zip、tar、gz、tar.gz
     )
 
 
@@ -57,6 +58,9 @@ def init_logger(log_dir: str = None,
     # to file
     if log_dir is not None:
         add_log_to_file(log_dir, log_filename, file_log_level)
+
+    # enable log prefix
+    logger.configure(extra={'prefix': ''})
 
     # simple test log output
     if show_demo_logger:
