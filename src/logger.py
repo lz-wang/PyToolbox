@@ -7,7 +7,7 @@ _LOG_FORMAT = (
     '<green>{time:MM-DD HH:mm:ss.SSS}</green> '
     '| <level>{level: <7}</level> '
     '| <cyan>{file: <15}<red>:</red> {line: <3}</cyan> '
-    '| <magenta><bold>{extra[prefix]}</bold></magenta><level>{message}</level>'
+    '| <magenta><bold>{extra[prefix]} </bold></magenta><level>{message}</level>'
 )
 
 
